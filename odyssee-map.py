@@ -26,7 +26,7 @@ def main(argv):
     
     file = open(inputfile,"r")
     places_dict = {}
-
+    
     for i, line in enumerate(file): 
         if line[0] == '#' or line[0] == ';' or len(line) < 2 :
             continue
@@ -36,9 +36,12 @@ def main(argv):
             duration = '0PA'
         else:
             place_from, duration, place_to = line_splited
-
-        places_dict[place_from] = {place_to: duration}
-
+        
+        if place_from in places_dict:
+            places_dict[place_from][place_to] = duration
+        else:
+            places_dict[place_from] = {place_to: duration}
+        
         if i == 55:
             break
     print(places_dict)
