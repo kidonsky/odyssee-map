@@ -24,19 +24,25 @@ def main(argv):
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
     
-    file = open(inputfile,"r") 
+    file = open(inputfile,"r")
+    places_dict = {}
+
     for i, line in enumerate(file): 
         if line[0] == '#' or line[0] == ';' or len(line) < 2 :
             continue
         line_splited = line.replace(' ', '').replace('\n', '').split("->")
         if len(line_splited) == 2:
             place_from, place_to = line_splited
-            duration = 0
+            duration = '0PA'
         else:
             place_from, duration, place_to = line_splited
-        print(line_splited)
+
+        places_dict[place_from] = {place_to: duration}
 
         if i == 55:
             break
+    print(places_dict)
+
+
 if __name__ == "__main__":
     main(sys.argv[1:])
