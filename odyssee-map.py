@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import sys, getopt
+from graphviz import Digraph
 
 def main(argv):
     inputfile = ''
@@ -26,8 +27,9 @@ def main(argv):
     
     file = open(inputfile,"r")
     places_dict = {}
+    places_graph = Digraph(comment='My Odysse Map', engine='neato')
     
-    for i, line in enumerate(file): 
+    for line in file: 
         if line[0] == '#' or line[0] == ';' or len(line) < 2 :
             continue
         line_splited = line.replace(' ', '').replace('\n', '').split("->")
@@ -36,15 +38,27 @@ def main(argv):
             duration = '0PA'
         else:
             place_from, duration, place_to = line_splited
-        
+
+        if "PA" not in duration:
+            notes = duration
+            duration = "7"
+        else:
+            notes = ''
+            duration = str(int(duration.replace("PA",''))+7)
+            if int(duration) > 30:
+                duration = "30"
+
         if place_from in places_dict:
             places_dict[place_from][place_to] = duration
         else:
             places_dict[place_from] = {place_to: duration}
+            places_graph.node(place_from, shape="box")
         
-        if i == 55:
-            break
-    print(places_dict)
+        places_graph.edge(place_from, place_to, label=(duration+"PA"), len=duration, weigth=duration)
+
+
+    places_graph.view()
+
 
 
 if __name__ == "__main__":

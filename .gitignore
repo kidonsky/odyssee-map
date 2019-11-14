@@ -1,3 +1,5 @@
+*.pdf
+*.gv
 
 # My Virtualenv
 env/
