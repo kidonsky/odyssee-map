@@ -31,7 +31,11 @@ def main():
     
     file = open(inputfile,"r")
     placesfrom_list = ()
-    places_graph = Digraph(comment='My Odysse Map', engine='neato', format=outputformat)
+    places_graph = Digraph(
+            comment='My Odysse Map', 
+            engine='neato', 
+            format=outputformat
+            )
     
     for line in file:
         # Escape comment lines from input file
@@ -80,11 +84,14 @@ def main():
         if place_from not in placesfrom_list:
             places_graph.node(place_from, shape="box")
         
-        places_graph.edge(place_from, place_to, label=true_duration, len=str(int(duration)/3), weigth=duration, color=difficulty)
+        places_graph.edge(place_from, place_to, 
+                label = true_duration, 
+                len = str(int(duration)/3), 
+                weigth = duration, 
+                color = difficulty
+                )
 
     places_graph.render(("output/"+outputfile), view=True) 
-
-
 
 if __name__ == "__main__":
     main()
