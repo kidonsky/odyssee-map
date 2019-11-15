@@ -1,5 +1,6 @@
 *.pdf
 *.gv
+output/
 
 # My Virtualenv
 env/
