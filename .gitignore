@@ -5,6 +5,7 @@
 *.dot
 *.gv
 output/
+!map-example.pdf
 
 # Input files type
 *.txt
