@@ -3,31 +3,40 @@
 import sys, getopt
 from graphviz import Digraph
 
-def main(argv):
+def main():
     inputfile = ''
     outputfile = ''
     try:
-        opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
-    except getopt.GetoptError:
-        print('test.py -i <inputfile> -o <outputfile>')
+        opts, args = getopt.getopt(sys.argv[1:],"hi:o:f:",["help","ifile=","ofile=", "format="])
+    except getopt.GetoptError as err:
+        print('test.py -i <input file> -o <output file> -f <format>')
         sys.exit(2)
+    if "i" not in opts and "--ifile" not in opts:
+        print("You must give input file in parameter.")
+        print('test.py -i <input file> [ <output file> -f <format>]')
+        sys.exit(2)
+    if "-o" not in opts and "--ofile" not in opts:
+        outputfile = "odyssee_map"
+    if "-f" not in opts and "--format" not in opts:
+        outputformat = "pdf"
+
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -i <inputfile> -o <outputfile>')
+            print('test.py -i <inputfile> -o <outputfile> -f <format>')
             sys.exit()
         elif opt in ("-i", "--ifile"):
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
-    if outputfile == "":
-       outputfile = "odysse_map"
+        elif opt in ("-f", "--format"):
+            outputformat = arg
 
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
     
     file = open(inputfile,"r")
     places_dict = {}
-    places_graph = Digraph(comment='My Odysse Map', engine='neato', format="png")
+    places_graph = Digraph(comment='My Odysse Map', engine='neato', format=outputformat)
     
     for line in file: 
         if line[0] == '#' or line[0] == ';' or len(line) < 2 :
@@ -73,4 +82,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
