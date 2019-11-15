@@ -1,9 +1,16 @@
 *.pdf
+*.png
+*.svg
+*.jpg
+*.dot
 *.gv
 output/
-*.md
-!README.md
-!places_example.md
+
+# Input files type
+*.txt
+!requirements.txt
+# And we keep the example
+!places-example.txt
 
 # My Virtualenv
 env/
