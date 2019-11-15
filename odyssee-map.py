@@ -19,10 +19,11 @@ def main():
             print("Not good format.")
         print("Default format is pdf.")
         outputformat = "pdf"
-    
+    else:
+        outputformat = args.format
     if args.outputfile is None :
         # Default output file
-        outputfile = "output/odyssee-map"
+        outputfile = "odyssee-map"
     else:
         outputfile = args.outputfile
 
