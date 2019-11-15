@@ -10,8 +10,10 @@ See `places_example.md` and [Input file](#Input-file 'Go to Input file section')
 
 ### Present
 
-- Draw quickly a map-like graph with colored edges from a simple text file
-- All unvisited places are represented by an oval. All visited places are represented a box.
+- Time efficiently : draw quickly a map-like graph with colored edges from a simple text file
+- Quicly see un-visited places : 
+all unvisited places are represented by an oval and all visited places are represented a box
+- Estimate distances in a look : edges are proportionnals to distance between places
 
 ### Roadmap
 
