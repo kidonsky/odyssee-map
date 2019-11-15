@@ -4,9 +4,6 @@ import argparse
 from graphviz import Digraph
 
 def main():
-    inputfile = ''
-    outputfile = ''
-
     parser = argparse.ArgumentParser()
     
     parser.add_argument('-i', '--inputfile', required=True)
@@ -15,12 +12,16 @@ def main():
 
     args = parser.parse_args()
     inputfile = args.inputfile
+    
+    # Check format given and store it
     if args.format not in ("pdf","png","svg","jpg", "dot"):
         if args.format is not None :
             print("Not good format.")
         print("Default format is pdf.")
         outputformat = "pdf"
+    
     if args.outputfile is None :
+        # Default output file
         outputfile = "output/odyssee-map"
     else:
         outputfile = args.outputfile
@@ -32,25 +33,38 @@ def main():
     places_dict = {}
     places_graph = Digraph(comment='My Odysse Map', engine='neato', format=outputformat)
     
-    for line in file: 
+    for line in file:
+        # Escape comment lines from input file
         if line[0] == '#' or line[0] == ';' or len(line) < 2 :
             continue
+
         line_splited = line.replace(' ', '').replace('\n', '').split("->")
+        
+        # Check if ther is a duration given on the line ?
         if len(line_splited) == 2:
             place_from, place_to = line_splited
             duration = '0PA'
         else:
             place_from, duration, place_to = line_splited
 
+        # Graph is not pretty with durations < duration_offset
         duration_offset = 9
+
+        # A non-duration text was inserted between places in input file
         if "PA" not in duration:
+            # A note about path between two places in place of duration
             notes = duration
+            # true_duration will serve for the edge label
             true_duration = "0PA"
+            # duration default
             duration = str(duration_offset)
         else:
             notes = ''
             true_duration = duration
+            # To keep a visible differences between durations, 
+            # we add here the offset and then we will make a division
             duration = str(int(duration.replace("PA",''))+duration_offset)
+            # Set different colors in function of duration
             if int(duration) < 10 :
                 difficulty = "black"
             elif int(duration) < 15 :
