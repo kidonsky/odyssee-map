@@ -69,18 +69,19 @@ def main():
             # To keep a visible differences between durations, 
             # we add here the offset and then we will make a division
             duration = str(int(duration.replace("PA",''))+duration_offset)
-            # Set different colors in function of duration
-            if int(duration) < 10 :
-                difficulty = "black"
-            elif int(duration) < 15 :
-                difficulty = "grey"
-            elif int(duration) < 20 :
-                difficulty = "orange"
-            elif int(duration) < 30 :
-                difficulty = "red"
-            else :
-                duration = "30"
-                difficulty = "brown"
+
+        # Set different colors in function of duration
+        if int(duration) < 10 :
+            difficulty = "black"
+        elif int(duration) < 15 :
+            difficulty = "grey"
+        elif int(duration) < 20 :
+            difficulty = "orange"
+        elif int(duration) < 30 :
+            difficulty = "red"
+        else :
+            duration = "30"
+            difficulty = "brown"
 
         if place_from not in placesfrom_list:
             places_graph.node(place_from, shape="box")
