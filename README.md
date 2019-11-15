@@ -12,15 +12,16 @@ See `places_example.md` and [Input file](#Input-file 'Go to Input file section')
 
 ### Present
 
-- Time efficiently : draw quickly a map-like graph with colored edges from a simple text file
-- Quicly see un-visited places : 
+- **Time efficiently** : draw quickly a map-like graph with colored edges from a simple text file
+- **Quicly see un-visited places** : 
 all unvisited places are represented by an oval and all visited places are represented a box
-- Estimate distances in a look : edges are proportionnals to distance between places
+- **Estimate distances in a look** : edges are proportionnals to distance between places
 
 ### Roadmap
 
 - Color Nodes in function of big mother place with a personnal configuration file, 
 by example all deserts places would be colored on yellow, even if the place name begin by *ds* and not *desert*.
+- Add interface to get shorter road between two places
 - Enjoy and add functionnalities
 
 ## Usage
@@ -69,10 +70,10 @@ Comments can be add on the file by beginning a line by `#` or `;` symbols.
 
 ### Actuellement
 
-- Economisez du temps : Le programme dessine rapidement une carte sous forme de graphe avec des liaisons colorées à partir d'un simple fichier texte très rapide à tenir à jour (environ une cinquantaine de lettres à taper par nouveau chemin)
-- Repérez rapidement les lieux non visités : 
+- **Economisez du temps** : Le programme dessine rapidement une carte sous forme de graphe avec des liaisons colorées à partir d'un simple fichier texte très rapide à tenir à jour (environ une cinquantaine de lettres à taper par nouveau chemin)
+- **Repérez rapidement les lieux non visités** : 
 tous les lieux non visités (accessibles depuis un lieu visité) sont représentés par des ovales alors que tous les lieux visités sont rerésentés par des boîtes.
-- Estimez les distances en un coup d'oeil : la taille des liaisons entre les lieux sont proportionnelles avec la distance entre les lieux.
+- **Estimez les distances en un coup d'oeil** : la taille des liaisons entre les lieux sont proportionnelles avec la distance entre les lieux.
 
 ### En projet
 
