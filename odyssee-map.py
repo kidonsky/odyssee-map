@@ -1,35 +1,29 @@
 #!/usr/bin/python
 
-import sys, getopt
+import argparse 
 from graphviz import Digraph
 
 def main():
     inputfile = ''
     outputfile = ''
-    try:
-        opts, args = getopt.getopt(sys.argv[1:],"hi:o:f:",["help","ifile=","ofile=", "format="])
-    except getopt.GetoptError as err:
-        print('test.py -i <input file> -o <output file> -f <format>')
-        sys.exit(2)
-    if "i" not in opts and "--ifile" not in opts:
-        print("You must give input file in parameter.")
-        print('test.py -i <input file> [ <output file> -f <format>]')
-        sys.exit(2)
-    if "-o" not in opts and "--ofile" not in opts:
-        outputfile = "odyssee_map"
-    if "-f" not in opts and "--format" not in opts:
-        outputformat = "pdf"
 
-    for opt, arg in opts:
-        if opt == '-h':
-            print('test.py -i <inputfile> -o <outputfile> -f <format>')
-            sys.exit()
-        elif opt in ("-i", "--ifile"):
-            inputfile = arg
-        elif opt in ("-o", "--ofile"):
-            outputfile = arg
-        elif opt in ("-f", "--format"):
-            outputformat = arg
+    parser = argparse.ArgumentParser()
+    
+    parser.add_argument('-i', '--inputfile', required=True)
+    parser.add_argument("-o",'--outputfile')
+    parser.add_argument('-f', '--format')
+
+    args = parser.parse_args()
+    inputfile = args.inputfile
+    if args.format not in ("pdf","png","svg","jpg", "dot"):
+        if args.format is not None :
+            print("Not good format.")
+        print("Default format is pdf.")
+        outputformat = "pdf"
+    if args.outputfile is None :
+        outputfile = "output/odyssee-map"
+    else:
+        outputfile = args.outputfile
 
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
