@@ -1,6 +1,9 @@
 *.pdf
 *.gv
 output/
+*.md
+!README.md
+!places_example.md
 
 # My Virtualenv
 env/
