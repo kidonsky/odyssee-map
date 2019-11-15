@@ -36,6 +36,8 @@ by example all deserts places would be colored on yellow, even if the place name
 
   For more details with options, run `python odyssee-map.py -h`
 
+- Find your output file on the created `output/` folder
+
 ## Input file 
 
 There are some exigences for the input file. See comments in  `places_example.md`.
