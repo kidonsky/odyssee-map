@@ -4,7 +4,7 @@ Version 0.1
 
 This is a project to generate a big intuitive map for the french online game [*Odyssée*](https://www.jdr-odyssee.net/odyssee/).
 A simple input file is necessary. 
-See `places_example.md` and [Input file](##Input-file 'Go to Input file section') to see the few requirements for the input file.
+See `places_example.md` and [Input file](#Input-file 'Go to Input file section') to see the few requirements for the input file.
 
 ## Functionalities
 
