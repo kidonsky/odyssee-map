@@ -4,6 +4,7 @@
 
 foret->boisdore
 foret->5PA->Brumevent
+foret -> 10PA -> Arbre
 
 boisdore->1PA->Arbre
 # Le trajet boisdore vers foret coute plus cher que l'inverse. 

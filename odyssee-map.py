@@ -30,7 +30,7 @@ def main():
     print('Output file is :', outputfile)
     
     file = open(inputfile,"r")
-    places_dict = {}
+    placesfrom_list = ()
     places_graph = Digraph(comment='My Odysse Map', engine='neato', format=outputformat)
     
     for line in file:
@@ -77,10 +77,7 @@ def main():
                 duration = "30"
                 difficulty = "brown"
 
-        if place_from in places_dict:
-            places_dict[place_from][place_to] = duration
-        else:
-            places_dict[place_from] = {place_to: duration}
+        if place_from not in placesfrom_list:
             places_graph.node(place_from, shape="box")
         
         places_graph.edge(place_from, place_to, label=true_duration, len=str(int(duration)/3), weigth=duration, color=difficulty)
