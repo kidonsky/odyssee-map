@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse 
+import os
 from graphviz import Digraph
 
 def main():
@@ -94,6 +95,7 @@ def main():
                 )
 
     places_graph.render(("output/"+outputfile), view=True) 
+    os.remove("output/"+outputfile)
 
 if __name__ == "__main__":
     main()
