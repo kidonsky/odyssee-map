@@ -16,6 +16,8 @@ See `places_example.md` and [Input file](#Input-file 'Go to Input file section')
 - **Quicly see un-visited places** : 
 all unvisited places are represented by an oval and all visited places are represented a box
 - **Estimate distances in a look** : edges are proportionnals to distance between places
+- **Take notes on edges** : A river need to be crossed to go on an island ? Note it
+in places file and see it quicly on map. (see [Input file](#Input-file 'Go to Input file section') for details)
 
 ### Roadmap
 
@@ -59,6 +61,13 @@ By example :
 All different representations of a place **must** be wrote exactly the same way. 
 Indeed `Paris.road-north` is not considerated the same place that `Paris.road_north` or `paris.road-north` etc, ...
 
+### Notes
+
+In your file, in place of cost of PA, you can add a note about the road between the 
+two `->` symbols.
+By example :
+`Paris->Train->Toulouse`
+
 ### Comments
 
 Comments can be add on the file by beginning a line by `#` or `;` symbols.
@@ -74,6 +83,9 @@ Comments can be add on the file by beginning a line by `#` or `;` symbols.
 - **Repérez rapidement les lieux non visités** : 
 tous les lieux non visités (accessibles depuis un lieu visité) sont représentés par des ovales alors que tous les lieux visités sont rerésentés par des boîtes.
 - **Estimez les distances en un coup d'oeil** : la taille des liaisons entre les lieux sont proportionnelles avec la distance entre les lieux.
+- **Prenez des notes sur les chemins** : Une rivière doit être traversée pour 
+atteindre un lieu ? Notez-le dans le fichier des lieux et retrouvez cette information
+rapidement sur la carte. (voir [Fichier d'entrée](#Fichier-d'entrée "Aller à la section fichier d'entrée") for details)
 
 ### En projet
 
