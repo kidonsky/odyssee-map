@@ -59,7 +59,10 @@ def main():
         # A non-duration text was inserted between places in input file
         if "PA" not in duration:
             # A note about path between two places in place of duration
-            notes = duration
+            if '{' in duration :
+                notes = duration.replace('{', ' {').replace('}', '} ')
+            else :
+                notes = ' {' + duration + '} '
             # true_duration will serve for the edge label
             true_duration = "0PA"
             # duration default
@@ -88,7 +91,7 @@ def main():
             places_graph.node(place_from, shape="box")
         
         places_graph.edge(place_from, place_to, 
-                label = true_duration, 
+                label = (true_duration + notes), 
                 len = str(int(duration)/3), 
                 weigth = duration, 
                 color = difficulty
