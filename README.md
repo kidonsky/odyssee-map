@@ -1,6 +1,6 @@
 # Odyssee-map
 
-Version 0.1
+![GitHub r (latest by date)](https://img.shields.io/github/v/release/kidonsky/odyssee-map) ![GitHub Release Date](https://img.shields.io/github/release-date/kidonsky/odyssee-map) ![GitHub last commit](https://img.shields.io/github/last-commit/kidonsky/odyssee-map) 
 
 This is a project to generate a big intuitive map for the french online game [*Odyssée*](https://www.jdr-odyssee.net/odyssee/).
 A simple input file is necessary. 
