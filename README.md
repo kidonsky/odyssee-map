@@ -1,6 +1,13 @@
 # Odyssee-map
 
-![GitHub r (latest by date)](https://img.shields.io/github/v/release/kidonsky/odyssee-map) ![GitHub Release Date](https://img.shields.io/github/release-date/kidonsky/odyssee-map) ![GitHub last commit](https://img.shields.io/github/last-commit/kidonsky/odyssee-map) 
+![GitHub r (latest by date)](https://img.shields.io/github/v/release/kidonsky/odyssee-map) 
+![GitHub last commit](https://img.shields.io/github/last-commit/kidonsky/odyssee-map) 
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/pypi/graphviz) 
+
+![GitHub](https://img.shields.io/github/license/kidonsky/odyssee-map) 
+![Open Source Love](https://github.com/kidonsky/open-source-badges/blob/master/badges/open-source-v3/open-source.svg)
+
+![LGTM Grade](https://img.shields.io/lgtm/grade/python/github/kidonsky/odyssee-map)
 
 This is a project to generate a big intuitive map for the french online game [*Odyssée*](https://www.jdr-odyssee.net/odyssee/).
 A simple input file is necessary. 
