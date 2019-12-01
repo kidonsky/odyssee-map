@@ -6,6 +6,7 @@
 *.gv
 output/
 !map-example.pdf
+!map-example.png
 
 *.toml
 
