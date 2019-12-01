@@ -13,7 +13,17 @@ This is a project to generate a big intuitive map for the french online game [*O
 A simple input file is necessary. 
 See `places_example.md` and [Input file](#Input-file 'Go to Input file section') to see the few requirements for the input file.
 
+---
+Example of a resized output of this program :
+
+![Map example](https://github.com/kidonsky/odyssee-map/blob/dev/map-example.png "This is a resized map example." )
+
+A full-sized one can be found on ![map-example.pdf](https://github.com/kidonsky/odyssee-map/blob/dev/map-example.pdf)
+
+---
 *French translation of this file can be found [here](#French-translation 'Go to French translation') at the end of English part.*
+
+---
 
 ## Functionalities
 
