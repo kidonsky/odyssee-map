@@ -12,7 +12,10 @@ boisdore->1PA->Arbre
 boisdore->1PA->foret 
 
 Brumevent->50PA->Fournaise
-Brumevent->20PA->Baie
+Brumevent->5PA->Baie
 
-Baie->{Bateau}->Ocean
-Baie->Fournaise
+Baie->10PA->Fournaise
+Baie -> ba.tribunaux
+Baie -> ba.port
+ba.port->{Bateau}->Ocean
+ba.tribunaux->1PA->ba.port

@@ -1,8 +1,15 @@
 #!/usr/bin/python
 
 import argparse 
+import toml
 import os
 from graphviz import Digraph
+
+def personnalized_color(value, colorscheme):
+    if value in colorscheme.keys():
+        return colorscheme[value]
+
+    return value
 
 def main():
     parser = argparse.ArgumentParser()
@@ -10,6 +17,7 @@ def main():
     parser.add_argument('-i', '--inputfile', required=True)
     parser.add_argument("-o",'--outputfile')
     parser.add_argument('-f', '--format')
+    parser.add_argument('-cf', '--configurationfile')
 
     args = parser.parse_args()
     inputfile = args.inputfile
@@ -27,10 +35,18 @@ def main():
         outputfile = "odyssee-map"
     else:
         outputfile = args.outputfile
+    if args.configurationfile is None:
+        toml_file = "color_places.toml.example"
+    else:
+        toml_file = args.configurationfile
 
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
-    
+
+    toml_loaded = toml.loads(open(toml_file).read())
+    colors_place = toml_loaded["places_color"]
+    colorsheme = toml_loaded["color_sheme"]
+
     file = open(inputfile,"r")
     placesfrom_list = ()
     places_graph = Digraph(
@@ -87,8 +103,14 @@ def main():
             duration = "30"
             difficulty = "brown"
 
+
         if place_from not in placesfrom_list:
-            places_graph.node(place_from, shape="box")
+            big_place = place_from.split(".")[0].split("_")[0] 
+            if big_place in colors_place.keys():
+                color = personnalized_color(colors_place[big_place], colorsheme)
+            else:
+                color ='white'
+            places_graph.node(place_from, shape="box", fillcolor=color, style='filled')
         
         places_graph.edge(place_from, place_to, 
                 label = (true_duration + notes), 

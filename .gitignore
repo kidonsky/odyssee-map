@@ -7,6 +7,8 @@
 output/
 !map-example.pdf
 
+*.toml
+
 # Input files type
 *.txt
 !requirements.txt

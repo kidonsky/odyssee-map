@@ -1,0 +1,20 @@
+# Colors places configuration file
+#
+# This file is an example to give colors to places in function of it's name
+
+[places_color]
+
+foret = "green"
+ft = "green"
+
+boisdore = "green2"
+
+Baie = "blue"
+ba = "blue"
+
+Brumevent = 'grey'
+
+[color_sheme]
+
+green2 = "#b2ff59aa"
+blue = "#00b8d4aa"
