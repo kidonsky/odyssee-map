@@ -110,7 +110,7 @@ def main():
                 color = personnalized_color(colors_place[big_place], colorsheme)
             else:
                 color ='white'
-            places_graph.node(place_from, shape="box", fillcolor=color, style='filled')
+            places_graph.node(place_from, shape="box", fillcolor=color, style='filled', color=color)
         
         places_graph.edge(place_from, place_to, 
                 label = (true_duration + notes), 
