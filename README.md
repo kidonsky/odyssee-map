@@ -16,9 +16,9 @@ See `places_example.md` and [Input file](#Input-file 'Go to Input file section')
 ---
 Example of a resized output of this program :
 
-![Map example](https://github.com/kidonsky/odyssee-map/blob/dev/map-example.png "This is a resized map example." )
+![Map example](https://github.com/kidonsky/odyssee-map/blob/dev/example/map-example.png "This is a resized map example." )
 
-A full-sized one can be found on ![map-example.pdf](https://github.com/kidonsky/odyssee-map/blob/dev/map-example.pdf)
+A full-sized one can be found on ![map-example.pdf](https://github.com/kidonsky/odyssee-map/blob/dev/example/map-example.pdf)
 
 ---
 *French translation of this file can be found [here](#French-translation 'Go to French translation') at the end of English part.*
@@ -57,7 +57,7 @@ by example all deserts places would be colored on yellow, even if the place name
 
 - Finally run the program :
 
-  `python odyssee-map.py -i yourinputfile`
+  `python odyssee-map.py -i yourinputfile`  for the example file, just type : `python odyssee-map.py -i example/places-example.txt`
 
   For more details with options, run `python odyssee-map.py -h`
 
@@ -65,7 +65,7 @@ by example all deserts places would be colored on yellow, even if the place name
 
 ## Input file 
 
-There are some exigences for the input file. See comments in `places_example.md`.
+There are some exigences for the input file. See comments in `example/places_example.md`.
 
 ### Paths 
 
@@ -150,7 +150,7 @@ avec tous les lieux et chemins que vous voulez afficher dans la carte (général
 
 - Finallement lancer the programme depuis un terminal :
 
-  `python odyssee-map.py -i votrefichierdentreee`
+  `python odyssee-map.py -i votrefichierdentreee`   pour le fichier exemple, taper `python odyssee-map.py -i example/places-example.txt`
 
   Pour plus de détails avec les options, lancer `python odyssee-map.py -h`
 

@@ -36,7 +36,7 @@ def main():
     else:
         outputfile = args.outputfile
     if args.configurationfile is None:
-        toml_file = "color_places.toml.example"
+        toml_file = "example/color_places.toml.example"
     else:
         toml_file = args.configurationfile
 
