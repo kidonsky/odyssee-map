@@ -10,6 +10,8 @@ output/
 
 *.toml
 
+.vscode
+
 # Input files type
 *.txt
 !requirements.txt
