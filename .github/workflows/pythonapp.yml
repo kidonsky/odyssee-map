@@ -32,4 +32,4 @@ jobs:
    #     pytest
     - name: Generate example map
       run: |
-        python odyssee-map.py -i example/places-example.txt
+        python odyssee_map.py -i example/places-example.txt
