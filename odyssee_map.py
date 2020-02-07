@@ -3,6 +3,7 @@
 import argparse 
 import toml
 import os
+import sys
 from graphviz import Digraph
 
 def personnalized_color(value, colorscheme):
@@ -11,7 +12,7 @@ def personnalized_color(value, colorscheme):
 
     return value
 
-def parse_parameters():
+def parse_parameters(args):
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-i', '--inputfile', required=True)
@@ -19,7 +20,7 @@ def parse_parameters():
     parser.add_argument('-f', '--format')
     parser.add_argument('-cf', '--configurationfile')
 
-    args = parser.parse_args()
+    args = parser.parse_args(args)
     inputfile = args.inputfile
 
     # Check format given and store it
@@ -126,7 +127,7 @@ def create_graph_fromfile(file, graph, colors_place, colorsheme):
 
 def main():
    
-    (inputfile, outputformat, outputfile, toml_file) = parse_parameters() 
+    (inputfile, outputformat, outputfile, toml_file) = parse_parameters(sys.argv[1:]) 
     
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
