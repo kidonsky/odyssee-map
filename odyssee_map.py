@@ -44,7 +44,7 @@ def parse_parameters(args):
     return (inputfile, outputformat, outputfile, toml_file)    
 
 # Graph is not pretty with durations < duration_offset
-duration_offset = 9
+duration_offset = 15
 
 def extract_additional_infos(infos):
     # A non-duration text was inserted between places in input file
@@ -83,13 +83,13 @@ def extract_info_fromline(line):
 
 def set_edge_color(duration):
     # Set different colors in function of duration
-    if duration < 10 :
+    if duration < (duration_offset + 1) :
         difficulty = "black"
-    elif duration < 15 :
+    elif duration < (duration_offset + 6) :
         difficulty = "grey"
-    elif duration < 20 :
+    elif duration < (duration_offset + 11):
         difficulty = "orange"
-    elif duration < 30 :
+    elif duration < (duration_offset + 21) :
         difficulty = "red"
     else :
         duration = 30
