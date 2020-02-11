@@ -4,6 +4,8 @@
 
 [places_color]
 
+default-color = "white"
+
 foret = "green"
 ft = "green"
 

@@ -114,7 +114,7 @@ def create_graph_fromfile(file, graph, colors_place, colorsheme):
             if big_place in colors_place.keys():
                 color = personnalized_color(colors_place[big_place], colorsheme)
             else:
-                color ='white'
+                color = personnalized_color(colors_place["default-color"], colorsheme) 
             graph.node(place_from, shape="box", fillcolor=color, style='filled', color=color)
         
         graph.edge(place_from, place_to, 
