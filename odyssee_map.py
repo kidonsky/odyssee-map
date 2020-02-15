@@ -13,35 +13,28 @@ def personnalized_color(value, colorscheme):
     return value
 
 def parse_parameters(args):
+
+    # Output formats available with graphviz
+    # Default is pdf, because is lighter and infinitely zoomable
+    outformats_available = ("pdf","png","svg","jpg", "dot")
+    
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-i', '--inputfile', required=True)
-    parser.add_argument("-o",'--outputfile')
-    parser.add_argument('-f', '--format')
-    parser.add_argument('-cf', '--configurationfile')
+    parser.add_argument('-i', '--inputfile', required = True)
+    parser.add_argument("-o",'--outputfile', default = "odyssee-map")
+    parser.add_argument('-f', '--format', choices = outformats_available, default = "pdf")
+    parser.add_argument('-cf', '--configurationfile', default = "example/color_places.toml.example")
+    parser.add_argument('-noview', '--noviewoutput', default=True, action="store_false")
 
     args = parser.parse_args(args)
+    
     inputfile = args.inputfile
-
-    # Check format given and store it
-    if args.format not in ("pdf","png","svg","jpg", "dot"):
-        if args.format is not None :
-            print("Not good format.")
-        print("Default format is pdf.")
-        outputformat = "pdf"
-    else:
-        outputformat = args.format
-    if args.outputfile is None :
-        # Default output file
-        outputfile = "odyssee-map"
-    else:
-        outputfile = args.outputfile
-    if args.configurationfile is None:
-        toml_file = "example/color_places.toml.example"
-    else:
-        toml_file = args.configurationfile
-
-    return (inputfile, outputformat, outputfile, toml_file)    
+    outputformat = args.format
+    outputfile = args.outputfile
+    toml_file = args.configurationfile
+    view = args.noviewoutput
+ 
+    return (inputfile, outputformat, outputfile, toml_file, view)    
 
 # Graph is not pretty with durations < duration_offset
 duration_offset = 15
@@ -125,28 +118,35 @@ def create_graph_fromfile(file, graph, colors_place, colorsheme):
                 )
     return graph
 
-def main():
+def main(cli_args):
    
-    (inputfile, outputformat, outputfile, toml_file) = parse_parameters(sys.argv[1:]) 
+    (inputfile, outputformat, outputfile, toml_filename, viewout) = parse_parameters(cli_args) 
     
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
 
-    toml_loaded = toml.loads(open(toml_file).read())
+    toml_file = open(toml_filename,"r")
+    toml_loaded = toml.loads(toml_file.read())
     colors_place = toml_loaded["places_color"]
     colorsheme = toml_loaded["color_sheme"]
 
-    file = open(inputfile,"r")
+    places_file = open(inputfile,"r")
     places_graph = Digraph(
             comment='My Odysse Map', 
             engine='neato', 
             format=outputformat
             )
     
-    places_graph = create_graph_fromfile(file, places_graph, colors_place, colorsheme)
+    places_graph = create_graph_fromfile(places_file, places_graph, colors_place, colorsheme)
     
-    places_graph.render(("output/"+outputfile), view=True) 
+    places_file.close()
+    toml_file.close() 
+    
+    places_graph.render(("output/"+outputfile), view=viewout) 
     os.remove("output/"+outputfile)
 
+    return 0    
+
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
+
