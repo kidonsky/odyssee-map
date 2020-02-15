@@ -5,7 +5,7 @@
 *.dot
 *.gv
 output/
-tests_output.log
+.tests_output.log
 !map-example.pdf
 !map-example.png
 
@@ -21,6 +21,7 @@ tests_output.log
 
 # My Virtualenv
 env/
+env-test/
 
 # Created with gitignore.io :
 

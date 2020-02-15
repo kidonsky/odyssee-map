@@ -2,7 +2,7 @@ import unittest
 import contextlib
 import odyssee_map
 
-logfile = open("tests_output.log", "w")
+logfile = open(".tests_output.log", "w")
 
 class NominalCase(unittest.TestCase):
 
