@@ -2,12 +2,12 @@
 
 ## Code improvements
 
-- [ ] Write more tests
+- [x] Write more tests
 - [ ] Clean redirections in tests
 - [ ] Use argparse to directly open files
 - [ ] Use a config file for default values and offset duration
-- [ ] Add assertion to check places file lines validity
-- [ ] Add assertion to check that 'PA' is preceded by a numberi
+- [x] Add assertion to check places file lines validity
+- [x] Add assertion to check that 'PA' is preceded by a number
 - [ ] Simplify choose of default color
-- [ ] Make Github run tests
+- [x] Make Github run tests
 - [ ] Comply flake8 rules

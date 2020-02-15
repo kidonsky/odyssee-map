@@ -39,7 +39,12 @@ def parse_parameters(args):
 # Graph is not pretty with durations < duration_offset
 duration_offset = 15
 
-def extract_additional_infos(infos):
+line_expl = "\"Paris->20PA->Toulouse\""
+
+def pb_inputfile(msg_error, line_number):
+    return "Problem in input file, line " + str(line_number) + " : " + msg_error
+
+def extract_additional_infos(infos, line_number):
     # A non-duration text was inserted between places in input file
     if "PA" not in infos:
         # A note about path between two places in place of duration
@@ -53,16 +58,20 @@ def extract_additional_infos(infos):
         duration = duration_offset
     else:
         notes = ''
+        assert infos[:-2] == infos.replace('PA', ''), pb_inputfile("Bad line format. Line should be like : " + line_expl, line_number)
+        assert infos[:-2].isdigit(), pb_inputfile("Move cost must be a number", line_number)
+        assert int(infos[:-2]) >= 0, pb_inputfile("Cost of move can not be negative", line_number)
         true_duration = infos
-        # To keep a visible differences between durations, 
+        # To keep a visible difference between durations, 
         # we add here the offset and then we will make a division
-        duration = int(infos.replace("PA",''))+duration_offset
+        duration = int(infos[:-2]) + duration_offset
 
     return (notes, duration, true_duration)
 
-def extract_info_fromline(line):
+def extract_info_fromline(line, line_number):
     line_splited = line.replace(' ', '').replace('\n', '').split("->")
-    # Check if there is a duration given on the line ?
+    assert len(line_splited) == 2 or len(line_splited) == 3, pb_inputfile("It must have 1 or 2 '->'", line_number)
+    # Check if there is a duration given on the line
     if len(line_splited) == 2:
         place_from, place_to = line_splited
         duration = duration_offset
@@ -70,7 +79,7 @@ def extract_info_fromline(line):
         true_duration = "0PA"
     else:
         place_from, infos, place_to = line_splited
-        (notes, duration, true_duration) = extract_additional_infos(infos)
+        (notes, duration, true_duration) = extract_additional_infos(infos, line_number)
 
     return (place_from, place_to, duration, true_duration, notes)
 
@@ -90,15 +99,15 @@ def set_edge_color(duration):
     
     return (duration, difficulty)
 
-def create_graph_fromfile(file, graph, colors_place, colorsheme):
+def create_graph_fromfile(input_file, graph, colors_place, colorsheme):
     placesfrom_list = ()
 
-    for line in file:
+    for line_number, line in enumerate(input_file):
         # Escape comment lines from input file
         if line[0] == '#' or line[0] == ';' or len(line) < 2 :
             continue
 
-        (place_from, place_to, duration, true_duration, notes) = extract_info_fromline(line)
+        (place_from, place_to, duration, true_duration, notes) = extract_info_fromline(line, line_number)
 
         (duration, difficulty) = set_edge_color(duration)
 
