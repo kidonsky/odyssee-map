@@ -10,3 +10,4 @@
 - [ ] Add assertion to check that 'PA' is preceded by a numberi
 - [ ] Simplify choose of default color
 - [ ] Make Github run tests
+- [ ] Comply flake8 rules
