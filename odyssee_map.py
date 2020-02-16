@@ -6,10 +6,15 @@ import os
 import sys
 from graphviz import Digraph
 
+def cf_color(place, colors_place, colorsheme):
+    if place in colors_place.keys():
+        return personnalized_color(colors_place[place], colorsheme)
+    else :
+        return personnalized_color(colors_place["default-color"], colorsheme)
+
 def personnalized_color(value, colorscheme):
     if value in colorscheme.keys():
         return colorscheme[value]
-
     return value
 
 def parse_parameters(args):
@@ -113,10 +118,7 @@ def create_graph_fromfile(input_file, graph, colors_place, colorsheme):
 
         if place_from not in placesfrom_list:
             big_place = place_from.split(".")[0].split("_")[0] 
-            if big_place in colors_place.keys():
-                color = personnalized_color(colors_place[big_place], colorsheme)
-            else:
-                color = personnalized_color(colors_place["default-color"], colorsheme) 
+            color = cf_color(big_place, colors_place, colorsheme)
             graph.node(place_from, shape="box", fillcolor=color, style='filled', color=color)
         
         graph.edge(place_from, place_to, 

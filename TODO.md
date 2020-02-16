@@ -8,6 +8,6 @@
 - [ ] Use a config file for default values and offset duration
 - [x] Add assertion to check places file lines validity
 - [x] Add assertion to check that 'PA' is preceded by a number
-- [ ] Simplify choose of default color
+- [x] Simplify choose of default color
 - [x] Make Github run tests
 - [ ] Comply flake8 rules
