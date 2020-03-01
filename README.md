@@ -16,9 +16,9 @@ See `places_example.md` and [Input file](#Input-file 'Go to Input file section')
 ---
 Example of a resized output of this program :
 
-![Map example](https://github.com/kidonsky/odyssee-map/blob/dev/example/map-example.png "This is a resized map example." )
+![Map example](https://github.com/kidonsky/odyssee-map/blob/master/example/map-example.png "This is a resized map example." )
 
-A full-sized one can be found on ![map-example.pdf](https://github.com/kidonsky/odyssee-map/blob/dev/example/map-example.pdf)
+A full-sized one can be found on ![map-example.pdf](https://github.com/kidonsky/odyssee-map/blob/master/example/map-example.pdf)
 
 ---
 *French translation of this file can be found [here](#French-translation 'Go to French translation') at the end of English part.*
