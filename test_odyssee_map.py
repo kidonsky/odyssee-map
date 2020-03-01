@@ -1,22 +1,30 @@
 import unittest
 import contextlib
 import subprocess
+import toml
 import odyssee_map
 
 logfile = open(".tests_output.log", "w")
+defaults_file = open("default_values.toml", "r")
+defaults_loaded = toml.loads(defaults_file.read())
+defaults = defaults_loaded["argparse_default_values"]
+duration_offset = defaults_loaded["edge_default_values"]["duration_offset"]
+duration_landings = defaults_loaded["edge_default_values"]["duration_landings"]
+defaults_file.close()
 
 
 class NominalCase(unittest.TestCase):
 
     def test_min_parse_arguments(self):
         with contextlib.redirect_stdout(logfile):
-            result = odyssee_map.parse_parameters(["-i", ' my_5é~#"ile.md'])
+            result = odyssee_map.parse_parameters(["-i", ' my_5é~#"ile.md'], defaults)
         self.assertEqual(result, (' my_5é~#"ile.md', 'pdf', 'odyssee-map', 'example/color_places.toml.example', True))
 
     def test_max_parse_arguments(self):
         with contextlib.redirect_stdout(logfile):
             result = odyssee_map.parse_parameters(
-                ["-i", "my_file2.md", "-o", "my_output", "-cf", "my_colors", "-f", "png", "-noview"])
+                ["-i", "my_file2.md", "-o", "my_output", "-cf", "my_colors", "-f", "png", "-noview"],
+                defaults)
         self.assertEqual(result, ('my_file2.md', 'png', 'my_output', 'my_colors', False))
 
     def test_extract_additionnal_value(self):
@@ -69,12 +77,12 @@ class BadCase(unittest.TestCase):
     def test_parse_arguments_required_arg(self):
         with self.assertRaises(SystemExit):
             with contextlib.redirect_stderr(logfile):
-                odyssee_map.parse_parameters(["file"])
+                odyssee_map.parse_parameters(["file"], defaults)
 
     def test_parse_arguments_bad_arg(self):
         with self.assertRaises(SystemExit):
             with contextlib.redirect_stderr(logfile):
-                odyssee_map.parse_parameters(["-i", "my_file2.md", "-f", "pg"])
+                odyssee_map.parse_parameters(["-i", "my_file2.md", "-f", "pg"], defaults)
 
     def test_extract_noteandduration(self):
         with self.assertRaises(AssertionError):

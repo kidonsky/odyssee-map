@@ -6,6 +6,11 @@ import os
 import sys
 from graphviz import Digraph
 
+# Graph is not pretty with durations < duration_offset
+duration_offset = 15
+
+line_expl = "\"Paris->20PA->Toulouse\""
+
 
 def cf_color(place, colors_place, colorsheme):
     if place in colors_place.keys():
@@ -20,18 +25,20 @@ def personnalized_color(value, colorscheme):
     return value
 
 
-def parse_parameters(args):
+def parse_parameters(args, defaults):
 
     # Output formats available with graphviz
     # Default is pdf, because is lighter and infinitely zoomable
     outformats_available = ("pdf", "png", "svg", "jpg", "dot")
 
+    assert defaults["format"] in outformats_available, \
+        bad_file("defaults", "Bad format. It must be one of : " + str(outformats_available), "of 'format'")
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-i', '--inputfile', required=True)
-    parser.add_argument("-o", '--outputfile', default="odyssee-map")
-    parser.add_argument('-f', '--format', choices=outformats_available, default="pdf")
-    parser.add_argument('-cf', '--configurationfile', default="example/color_places.toml.example")
+    parser.add_argument("-o", '--outputfile', default=defaults["outputfile"])
+    parser.add_argument('-f', '--format', choices=outformats_available, default=defaults["format"])
+    parser.add_argument('-cf', '--configurationfile', default=defaults["colorsfile"])
     parser.add_argument('-noview', '--noviewoutput', default=True, action="store_false")
 
     args = parser.parse_args(args)
@@ -45,14 +52,8 @@ def parse_parameters(args):
     return (inputfile, outputformat, outputfile, toml_file, view)
 
 
-# Graph is not pretty with durations < duration_offset
-duration_offset = 15
-
-line_expl = "\"Paris->20PA->Toulouse\""
-
-
-def pb_inputfile(msg_error, line_number):
-    return "Problem in input file, line " + str(line_number) + " : " + msg_error
+def bad_file(file_type, msg_error, line_number):
+    return "Problem in " + file_type + " file, line " + str(line_number) + " : " + msg_error
 
 
 def extract_additional_infos(infos, line_number):
@@ -70,9 +71,9 @@ def extract_additional_infos(infos, line_number):
     else:
         notes = ''
         assert infos[:-2] == infos.replace('PA', ''), \
-            pb_inputfile("Bad line format. Line should be like : " + line_expl, line_number)
-        assert infos[:-2].isdigit(), pb_inputfile("Move cost must be a number", line_number)
-        assert int(infos[:-2]) >= 0, pb_inputfile("Cost of move can not be negative", line_number)
+            bad_file("input", "Bad line format. Line should be like : " + line_expl, line_number)
+        assert infos[:-2].isdigit(), bad_file("input", "Move cost must be a number", line_number)
+        assert int(infos[:-2]) >= 0, bad_file("input", "Cost of move can not be negative", line_number)
         true_duration = infos
         # To keep a visible difference between durations,
         # we add here the offset and then we will make a division
@@ -83,7 +84,7 @@ def extract_additional_infos(infos, line_number):
 
 def extract_info_fromline(line, line_number):
     line_splited = line.replace(' ', '').replace('\n', '').split("->")
-    assert len(line_splited) == 2 or len(line_splited) == 3, pb_inputfile("It must have 1 or 2 '->'", line_number)
+    assert len(line_splited) == 2 or len(line_splited) == 3, bad_file("input", "It must have 1 or 2 '->'", line_number)
     # Check if there is a duration given on the line
     if len(line_splited) == 2:
         place_from, place_to = line_splited
@@ -97,15 +98,15 @@ def extract_info_fromline(line, line_number):
     return (place_from, place_to, duration, true_duration, notes)
 
 
-def set_edge_color(duration):
+def set_edge_color(duration, landings):
     # Set different colors in function of duration
-    if duration < (duration_offset + 1):
+    if duration < (duration_offset + landings[0]):
         difficulty = "black"
-    elif duration < (duration_offset + 6):
+    elif duration < (duration_offset + landings[1]):
         difficulty = "grey"
-    elif duration < (duration_offset + 11):
+    elif duration < (duration_offset + landings[2]):
         difficulty = "orange"
-    elif duration < (duration_offset + 21):
+    elif duration < (duration_offset + landings[3]):
         difficulty = "red"
     else:
         duration = 30
@@ -114,8 +115,13 @@ def set_edge_color(duration):
     return (duration, difficulty)
 
 
-def create_graph_fromfile(input_file, graph, colors_place, colorsheme):
+def create_graph_fromfile(input_file, graph, colors_place, colorsheme, defaults):
     placesfrom_list = ()
+
+    assert len(defaults["duration_landings"]) == 4, \
+        bad_file("defaults", "You must have 4 landings for duration.", "of 'duration_landings'")
+    global duration_offset
+    duration_offset = defaults["duration_offset"]
 
     for line_number, line in enumerate(input_file):
         # Escape comment lines from input file
@@ -124,7 +130,7 @@ def create_graph_fromfile(input_file, graph, colors_place, colorsheme):
 
         (place_from, place_to, duration, true_duration, notes) = extract_info_fromline(line, line_number)
 
-        (duration, difficulty) = set_edge_color(duration)
+        (duration, difficulty) = set_edge_color(duration, defaults["duration_landings"])
 
         if place_from not in placesfrom_list:
             big_place = place_from.split(".")[0].split("_")[0]
@@ -143,15 +149,20 @@ def create_graph_fromfile(input_file, graph, colors_place, colorsheme):
 
 def main(cli_args):
 
-    (inputfile, outputformat, outputfile, toml_filename, viewout) = parse_parameters(cli_args)
+    defaults_file = open("default_values.toml", "r")
+    defaults_loaded = toml.loads(defaults_file.read())
+    argparse_defaults = defaults_loaded["argparse_default_values"]
+    edge_defaults = defaults_loaded["edge_default_values"]
+
+    (inputfile, outputformat, outputfile, colors_filename, viewout) = parse_parameters(cli_args, argparse_defaults)
 
     print('Input file is :', inputfile)
     print('Output file is :', outputfile)
 
-    toml_file = open(toml_filename, "r")
-    toml_loaded = toml.loads(toml_file.read())
-    colors_place = toml_loaded["places_color"]
-    colorsheme = toml_loaded["color_sheme"]
+    colors_file = open(colors_filename, "r")
+    colors_loaded = toml.loads(colors_file.read())
+    colors_place = colors_loaded["places_color"]
+    colorsheme = colors_loaded["color_sheme"]
 
     places_file = open(inputfile, "r")
     places_graph = Digraph(
@@ -160,10 +171,10 @@ def main(cli_args):
         format=outputformat
     )
 
-    places_graph = create_graph_fromfile(places_file, places_graph, colors_place, colorsheme)
+    places_graph = create_graph_fromfile(places_file, places_graph, colors_place, colorsheme, edge_defaults)
 
     places_file.close()
-    toml_file.close()
+    colors_file.close()
 
     places_graph.render(("output/" + outputfile), view=viewout)
     os.remove("output/" + outputfile)

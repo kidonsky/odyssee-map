@@ -1,0 +1,12 @@
+# Default values for map generation
+
+[argparse_default_values]
+
+outputfile = "odyssee-map"
+format = "pdf"
+colorsfile = "example/color_places.toml.example"
+
+[edge_default_values]
+
+duration_offset = 20
+duration_landings = [1, 6, 11, 21]

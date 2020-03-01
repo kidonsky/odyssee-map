@@ -10,6 +10,7 @@ output/
 !map-example.png
 
 *.toml
+!default_values.toml
 
 .vscode
 
