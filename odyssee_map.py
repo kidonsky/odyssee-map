@@ -24,6 +24,19 @@ def personnalized_color(value, colorscheme):
         return colorscheme[value]
     return value
 
+def clean_line(line):
+    for i, word in enumerate(line):
+        line[i] = clean_name(word)
+    return line
+
+
+def clean_name(name):
+    assert len(name) > 0, "Bad parameter"
+    while name[0] == ' ':
+        name = name[1:]
+    while name[-1] == ' ':
+        name = name[:-1]
+    return name
 
 def parse_parameters(args, defaults):
 
@@ -83,9 +96,10 @@ def extract_additional_infos(infos, line_number):
 
 
 def extract_info_fromline(line, line_number):
-    line_splited = line.replace(' ', '').replace('\n', '').split("->")
+    line_splited = line.replace('\n', '').split("->")
     assert len(line_splited) == 2 or len(line_splited) == 3, bad_file("input", "It must have 1 or 2 '->'", line_number)
     # Check if there is a duration given on the line
+    clean_line(line_splited)
     if len(line_splited) == 2:
         place_from, place_to = line_splited
         duration = duration_offset
@@ -133,7 +147,7 @@ def create_graph_fromfile(input_file, graph, colors_place, colorsheme, defaults)
         (duration, difficulty) = set_edge_color(duration, defaults["duration_landings"])
 
         if place_from not in placesfrom_list:
-            big_place = place_from.split(".")[0].split("_")[0]
+            big_place = place_from.split(".")[0].split("_")[0].split(" ")[0]
             color = cf_color(big_place, colors_place, colorsheme)
             graph.node(place_from, shape="box", fillcolor=color, style='filled', color=color)
 
