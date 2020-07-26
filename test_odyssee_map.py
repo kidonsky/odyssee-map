@@ -55,7 +55,7 @@ class NominalCase(unittest.TestCase):
     def test_extract_info_notewithspaces(self):
         with contextlib.redirect_stdout(logfile):
             result = odyssee_map.extract_info_fromline(" Paris ->{ TGV }-> Toulouse ", 5)
-        self.assertEqual(result, ("Paris", "Toulouse", 15, "0PA", " {TGV} "))
+        self.assertEqual(result, ("Paris", "Toulouse", 15, "0PA", " { TGV } "))
 
 # This test does not pass but I would like to obtain this result
 #   def test_extract_info_placeswithspaces(self):
