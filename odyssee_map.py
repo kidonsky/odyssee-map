@@ -130,7 +130,7 @@ def set_edge_color(duration, landings):
 
 
 def create_graph_fromfile(input_file, graph, colors_place, colorsheme, defaults):
-    placesfrom_list = ()
+    placesfrom_list = []
 
     assert len(defaults["duration_landings"]) == 4, \
         bad_file("defaults", "You must have 4 landings for duration.", "of 'duration_landings'")
@@ -150,6 +150,7 @@ def create_graph_fromfile(input_file, graph, colors_place, colorsheme, defaults)
             big_place = place_from.split(".")[0].split("_")[0].split(" ")[0]
             color = cf_color(big_place, colors_place, colorsheme)
             graph.node(place_from, shape="box", fillcolor=color, style='filled', color=color)
+            placesfrom_list.append(place_from)
 
         graph.edge(
             place_from, place_to,
